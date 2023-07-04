@@ -1,5 +1,3 @@
-import './util.js';
-import './data.js';
-import { createSimilarPosts } from './data.js';
+import {renderPosts} from './render-posts.js';
 
-createSimilarPosts();
+renderPosts();

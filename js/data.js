@@ -32,25 +32,21 @@ let commentId = 1;
 
 const createCommentMessage = (elements) => shuffleArray(elements).slice(0, getRandomInteger(1, 2)).join(' ');
 
-const createComment = () => {
-  return {
-    id: commentId++,
-    avatar: `img/${getRandomInteger(1, 6)}.svg`,
-    message: createCommentMessage(COMMENTS),
-    name: getRandomArrayElement(NAMES)
-  }
-};
+const createComment = () => ({
+  id: commentId++,
+  avatar: `img/${getRandomInteger(1, 6)}.svg`,
+  message: createCommentMessage(COMMENTS),
+  name: getRandomArrayElement(NAMES)
+});
 
-const createPost = () => {
-  return {
-    id: postId,
-    url: `photos/${postId++}.jpg`,
-    description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomInteger(15, 200),
-    comments: Array.from({length: getRandomInteger(0, 30)}, createComment)
-  }
-};
+const createPost = () => ({
+  id: postId,
+  url: `photos/${postId++}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomInteger(15, 200),
+  comments: Array.from({ length: getRandomInteger(0, 30) }, createComment)
+});
 
-const createSimilarPosts = () => Array.from({length: NUMBER_OF_POSTS}, createPost);
+const createSimilarPosts = () => Array.from({ length: NUMBER_OF_POSTS }, createPost);
 
-export {createSimilarPosts};
+export { createSimilarPosts };
