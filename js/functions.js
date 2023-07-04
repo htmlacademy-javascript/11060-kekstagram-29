@@ -13,10 +13,12 @@ const extractNumber = (string) => parseInt(String(string.replace(/\D/g, '')), 10
 
 extractNumber('er 234');
 
+const getMinutes = (time) => Number(time.split(':')[0]) * 60 + Number(time.split(':')[1]);
+
 const isMeetingWorktime = (startWork, endWork, startMeeting, durationMeeting) => {
-  const startMeetingInMinutes = Number(startMeeting.split(':')[0]) * 60 + Number(startMeeting.split(':')[1]);
-  const startWorktimeInMinutes = Number(startWork.split(':')[0]) * 60 + Number(startWork.split(':')[1]);
-  const endWorktimeInMinutes = Number(endWork.split(':')[0]) * 60 + Number(endWork.split(':')[1]);
+  const startMeetingInMinutes = getMinutes(startMeeting);
+  const startWorktimeInMinutes = getMinutes(startWork);
+  const endWorktimeInMinutes = getMinutes(endWork);
   const worktimeTotal = startWorktimeInMinutes + endWorktimeInMinutes;
 
   if (worktimeTotal < durationMeeting || startWorktimeInMinutes > startMeetingInMinutes) {
