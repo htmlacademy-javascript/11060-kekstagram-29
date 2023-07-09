@@ -34,7 +34,7 @@ const createCommentMessage = (elements) => shuffleArray(elements).slice(0, getRa
 
 const createComment = () => ({
   id: commentId++,
-  avatar: `img/${getRandomInteger(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: createCommentMessage(COMMENTS),
   name: getRandomArrayElement(NAMES)
 });
