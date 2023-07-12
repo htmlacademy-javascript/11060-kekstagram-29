@@ -1,11 +1,10 @@
 import { createSimilarPosts } from './data.js';
-import { openBigPicture } from './big-picture.js';
+import { renderBigPicture} from './big-picture.js';
 
 const thumbnailsList = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const thumbnails = createSimilarPosts();
-const fragment = document.createDocumentFragment();
 
 const createPost = (thumbnail) => {
   const thumbnailElement = thumbnailTemplate.cloneNode(true);
@@ -18,22 +17,16 @@ const createPost = (thumbnail) => {
   likes.textContent = thumbnail.likes;
   comments.textContent = thumbnail.comments.length;
 
+  thumbnailElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    renderBigPicture(thumbnail);
+  });
+
   return thumbnailElement;
 };
 
 const renderPosts = () => {
-  thumbnails.forEach((thumbnail) => {
-    const post = createPost(thumbnail);
-
-    post.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      openBigPicture(thumbnail);
-    });
-
-    fragment.append(post);
-  });
-
-  thumbnailsList.append(fragment);
+  thumbnails.forEach((thumbnail) => thumbnailsList.append(createPost(thumbnail)));
 };
 
 export {renderPosts};
