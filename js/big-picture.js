@@ -7,7 +7,7 @@ const commentsList = bigPicture.querySelector('.social__comments');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const socialCommentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoaderButton = bigPicture.querySelector('.social__comments-loader');
-const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+const commentTemplate = document.querySelector('.social__comment');
 
 let visibleComments = 5;
 let commentsFromData = [];
@@ -90,9 +90,9 @@ function closeBigPicture () {
 }
 
 function renderBigPicture (thumb) {
-  openModal();
   commentsFromData = thumb.comments;
   fillBigPicture(thumb);
+  openModal();
 }
 
 export {renderBigPicture};
