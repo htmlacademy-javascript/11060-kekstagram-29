@@ -1,5 +1,10 @@
 const MAX_LENGTH = 140;
 const REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
+const HASHTAG_AMOUNT_MESSAGE = 'Хэштегов может быть не более пяти';
+const HASHTAG_DUPLICATE_MESSAGE = 'Хэш-теги не должны повторяться';
+const HASHTAG_ERROR_MESSAGE = 'Хэш-тег должен начинаться с символа #, не может состоять только из #, не более 20 символов';
+const DESCRIPTION_LENGTH_MESSAGE = 'До 140 символов';
+
 const form = document.querySelector('.img-upload__form');
 const formDescriptionField = form.querySelector('.text__description');
 const formHashtagField = form.querySelector('.text__hashtags');
@@ -11,7 +16,7 @@ const pristine = new Pristine(form, {
 });
 
 const validateHashtags = (value) => {
-  const hashtags = value.trim().split(' ');
+  const hashtags = value.toLowerCase().trim().split(' ');
   const hashtagBoolean = hashtags.every((element) => REGEXP.test(element));
   const uniqueHashtags = new Set(hashtags);
 
@@ -19,7 +24,7 @@ const validateHashtags = (value) => {
 };
 
 const getHashtagErrorMessage = (value) => {
-  const hashtags = value.trim().split(' ');
+  const hashtags = value.toLowerCase().trim().split(' ');
   const hashtagBoolean = hashtags.every((element) => REGEXP.test(element));
   const uniqueHashtags = new Set(hashtags);
 
@@ -28,23 +33,28 @@ const getHashtagErrorMessage = (value) => {
   }
 
   if (hashtags.length > 5) {
-    return 'Хэштегов может быть не более пяти';
+    return HASHTAG_AMOUNT_MESSAGE;
   }
 
   if (hashtags.length !== uniqueHashtags.size) {
-    return 'Хэш-теги не должны повторяться';
+    return HASHTAG_DUPLICATE_MESSAGE;
   }
 
   if (!hashtagBoolean) {
-    return 'Хэш-тег должен начинаться с символа #, не может состоять только из одной решётки, максимальная длина одного хэш-тега 20 символов';
+    return HASHTAG_ERROR_MESSAGE;
   }
 };
 
 const validateDescription = (value) => value.length <= MAX_LENGTH;
 
-const getDescriptionErrorMessage = () => 'До 140 символов';
+const getDescriptionErrorMessage = () => DESCRIPTION_LENGTH_MESSAGE;
 
-pristine.addValidator(formHashtagField, validateHashtags, getHashtagErrorMessage);
-pristine.addValidator(formDescriptionField, validateDescription, getDescriptionErrorMessage);
+const addValidator = () => {
+  pristine.addValidator(formHashtagField, validateHashtags, getHashtagErrorMessage, 1, true);
+  pristine.addValidator(formDescriptionField, validateDescription, getDescriptionErrorMessage);
+};
 
-export {pristine};
+const validateByPristine = () => pristine.validate();
+const resetPristine = () => pristine.reset();
+
+export {addValidator, validateByPristine, resetPristine};
