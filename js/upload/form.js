@@ -1,8 +1,12 @@
 import {effectsListChangeHandler, initSlider} from './effects.js';
 import {addValidator, validateByPristine, resetPristine} from './validate.js';
 import {addImageScaling, resetScale} from './scaling.js';
+import {sendData} from '../utils/api.js';
+import {blockSubmitButton} from '../utils/util.js';
+import {createSuccessMessage, createErrorMessage} from './popup-messages.js';
 
 const MAX_LENGTH = 140;
+const POST_URL = 'https://29.javascript.pages.academy/kekstagram';
 const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector('.img-upload__overlay');
 const fileUpload = form.querySelector('.img-upload__input');
@@ -15,24 +19,30 @@ const fileUploadClickHandler = () => openForm();
 const сloseButtonClickHandler = () => closeForm();
 
 const formSubmitHandler = (evt) => {
-  if (!validateByPristine()) {
-    evt.preventDefault();
+  evt.preventDefault();
+
+  if (validateByPristine()) {
+    blockSubmitButton();
+    const formData = new FormData(evt.target);
+    sendData(POST_URL, formData, createSuccessMessage, createErrorMessage);
   }
 };
 
 const formEscKeydownHandler = (evt) => {
-  if (evt.key === 'Escape' && !evt.target.matches('.text__description') && !evt.target.matches('.text__hashtags')) {
+  if (evt.key === 'Escape'
+  && !evt.target.matches('.text__description')
+  && !evt.target.matches('.text__hashtags')
+  && !document.querySelector('.error')
+  && !document.querySelector('.success')) {
     evt.preventDefault();
     closeForm();
   }
 };
 
-fileUpload.addEventListener('change', fileUploadClickHandler);
-
 const setFormAttributes = () => {
   form.action = 'https://29.javascript.pages.academy/kekstagram';
   form.method = 'POST';
-  form.setAttribute('type', 'multipart/form-data');
+  form.enctype = 'multipart/form-data';
   formDescriptionField.setAttribute('maxlength', MAX_LENGTH);
 };
 
@@ -70,6 +80,7 @@ const initForm = () => {
   addValidator();
   addImageScaling();
   initSlider(effectLevelChecked);
+  fileUpload.addEventListener('change', fileUploadClickHandler);
 };
 
-export {initForm};
+export {initForm, closeForm};

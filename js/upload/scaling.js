@@ -10,12 +10,16 @@ const DEFAULT_SCALE = 100;
 const PERCENT_DIVIDER = 100;
 let currentScale = 100;
 
+const setStyleTransform = () => {
+  image.style.transform = `scale(${currentScale / PERCENT_DIVIDER})`;
+};
+
 const setSmallerScale = () => {
   if (currentScale > SCALE_MIN) {
     scaleValue.value = `${currentScale - SCALE_STEP}%`;
     currentScale = currentScale - SCALE_STEP;
   }
-  image.style.transform = `scale(${currentScale / PERCENT_DIVIDER})`;
+  setStyleTransform();
 };
 
 const setBiggerScale = () => {
@@ -23,7 +27,7 @@ const setBiggerScale = () => {
     scaleValue.value = `${currentScale + SCALE_STEP}%`;
     currentScale = currentScale + SCALE_STEP;
   }
-  image.style.transform = `scale(${currentScale / PERCENT_DIVIDER})`;
+  setStyleTransform();
 };
 
 const buttonSmallerClickHanler = () => setSmallerScale();

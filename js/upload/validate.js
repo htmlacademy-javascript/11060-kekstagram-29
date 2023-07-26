@@ -20,7 +20,7 @@ const validateHashtags = (value) => {
   const hashtagBoolean = hashtags.every((element) => REGEXP.test(element));
   const uniqueHashtags = new Set(hashtags);
 
-  return (hashtagBoolean && hashtags.length <= 5 && hashtags.length === uniqueHashtags.size);
+  return (hashtagBoolean && hashtags.length <= 5 && hashtags.length === uniqueHashtags.size || value === '');
 };
 
 const getHashtagErrorMessage = (value) => {
