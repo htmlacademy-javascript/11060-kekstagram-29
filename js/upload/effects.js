@@ -82,6 +82,7 @@ const updateEffect = (target) => {
     connect: 'lower',
   });
 
+  sliderElement.noUiSlider.off('update');
   sliderElement.noUiSlider.on('update', () => {
     effectValue.value = sliderElement.noUiSlider.get();
     image.style.filter = `${EFFECTS[target.value].name}(${effectValue.value}${EFFECTS[target.value].unit})`;
