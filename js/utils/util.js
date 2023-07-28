@@ -5,10 +5,6 @@ const UNBLOCKED_BUTTON_TEXT = 'Опубликовать';
 
 const submitButton = document.querySelector('.img-upload__submit');
 
-const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
 const shuffleArray = (elements) => {
   for (let i = elements.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -43,4 +39,26 @@ const unblockSubmitButton = () => {
   submitButton.textContent = UNBLOCKED_BUTTON_TEXT;
 };
 
-export {getRandomArrayElement, shuffleArray, isEscapeKey, showAlert, blockSubmitButton, unblockSubmitButton};
+function debounce (callback, timeoutDelay) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+function throttle (callback, delayBetweenFrames) {
+  let lastTime = 0;
+
+  return (...rest) => {
+    const now = new Date();
+
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+}
+
+export {shuffleArray, isEscapeKey, showAlert, blockSubmitButton, unblockSubmitButton, debounce, throttle};
