@@ -4,6 +4,7 @@ import {addImageScaling, resetScale} from './scaling.js';
 import {sendData} from '../utils/api.js';
 import {blockSubmitButton} from '../utils/util.js';
 import {createSuccessMessage, createErrorMessage} from './popup-messages.js';
+import {initFileUpload} from './upload-file.js';
 
 const MAX_LENGTH = 140;
 const POST_URL = 'https://29.javascript.pages.academy/kekstagram';
@@ -80,6 +81,7 @@ const initForm = () => {
   addValidator();
   addImageScaling();
   initSlider(effectLevelChecked);
+  initFileUpload();
   fileUpload.addEventListener('change', fileUploadClickHandler);
 };
 
