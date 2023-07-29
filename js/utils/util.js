@@ -39,26 +39,4 @@ const unblockSubmitButton = () => {
   submitButton.textContent = UNBLOCKED_BUTTON_TEXT;
 };
 
-function debounce (callback, timeoutDelay) {
-  let timeoutId;
-
-  return (...rest) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
-}
-
-function throttle (callback, delayBetweenFrames) {
-  let lastTime = 0;
-
-  return (...rest) => {
-    const now = new Date();
-
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-}
-
-export {shuffleArray, isEscapeKey, showAlert, blockSubmitButton, unblockSubmitButton, debounce, throttle};
+export { shuffleArray, isEscapeKey, showAlert, blockSubmitButton, unblockSubmitButton };

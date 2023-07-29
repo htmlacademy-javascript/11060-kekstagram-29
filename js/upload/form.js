@@ -1,10 +1,10 @@
-import {effectsListChangeHandler, initSlider} from './effects.js';
-import {addValidator, validateByPristine, resetPristine} from './validate.js';
-import {addImageScaling, resetScale} from './scaling.js';
-import {sendData} from '../utils/api.js';
-import {blockSubmitButton} from '../utils/util.js';
-import {createSuccessMessage, createErrorMessage} from './popup-messages.js';
-import {initFileUpload} from './upload-file.js';
+import { effectsListChangeHandler, initSlider } from './effects.js';
+import { addValidator, validateByPristine, resetPristine } from './validate.js';
+import { addImageScaling, resetScale } from './scaling.js';
+import { sendData } from '../utils/api.js';
+import { blockSubmitButton } from '../utils/util.js';
+import { createSuccessMessage, createErrorMessage } from './popup-messages.js';
+import { initFileUpload } from './upload-file.js';
 
 const MAX_LENGTH = 140;
 const POST_URL = 'https://29.javascript.pages.academy/kekstagram';
@@ -31,10 +31,10 @@ const formSubmitHandler = (evt) => {
 
 const formEscKeydownHandler = (evt) => {
   if (evt.key === 'Escape'
-  && !evt.target.matches('.text__description')
-  && !evt.target.matches('.text__hashtags')
-  && !document.querySelector('.error')
-  && !document.querySelector('.success')) {
+    && !evt.target.matches('.text__description')
+    && !evt.target.matches('.text__hashtags')
+    && !document.querySelector('.error')
+    && !document.querySelector('.success')) {
     evt.preventDefault();
     closeForm();
   }
@@ -47,27 +47,27 @@ const setFormAttributes = () => {
   formDescriptionField.setAttribute('maxlength', MAX_LENGTH);
 };
 
-function openModal () {
+function openModal() {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   closeFormButton.addEventListener('click', сloseButtonClickHandler);
   document.addEventListener('keydown', formEscKeydownHandler);
 }
 
-function closeModal () {
+function closeModal() {
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   closeFormButton.removeEventListener('click', сloseButtonClickHandler);
   document.removeEventListener('keydown', formEscKeydownHandler);
 }
 
-function openForm () {
+function openForm() {
   openModal();
   form.addEventListener('submit', formSubmitHandler);
   effectsList.addEventListener('change', effectsListChangeHandler);
 }
 
-function closeForm () {
+function closeForm() {
   closeModal();
   form.removeEventListener('submit', formSubmitHandler);
   effectsList.removeEventListener('change', effectsListChangeHandler);
@@ -85,4 +85,4 @@ const initForm = () => {
   fileUpload.addEventListener('change', fileUploadClickHandler);
 };
 
-export {initForm, closeForm};
+export { initForm, closeForm };

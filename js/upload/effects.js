@@ -100,4 +100,4 @@ const effectsListChangeHandler = (evt) => {
   setSliderState(evt.target);
 };
 
-export {initSlider, effectsListChangeHandler};
+export { initSlider, effectsListChangeHandler };

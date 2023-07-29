@@ -43,4 +43,4 @@ const resetScale = () => {
   currentScale = DEFAULT_SCALE;
 };
 
-export {addImageScaling, resetScale};
+export { addImageScaling, resetScale };

@@ -70,14 +70,14 @@ const popupEscKeydownHandler = (evt) => {
 
 const сloseButtonClickHandler = () => closeBigPicture();
 
-function openModal () {
+function openModal() {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', popupEscKeydownHandler);
   closeButton.addEventListener('click', сloseButtonClickHandler);
 }
 
-function closeModal () {
+function closeModal() {
   document.body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', popupEscKeydownHandler);
@@ -85,14 +85,14 @@ function closeModal () {
   visibleComments = COMMENTS_COUNTER;
 }
 
-function closeBigPicture () {
+function closeBigPicture() {
   closeModal();
 }
 
-function renderBigPicture (thumb) {
+function renderBigPicture(thumb) {
   commentsFromData = thumb.comments;
   fillBigPicture(thumb);
   openModal();
 }
 
-export {renderBigPicture};
+export { renderBigPicture };

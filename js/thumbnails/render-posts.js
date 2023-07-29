@@ -1,4 +1,4 @@
-import {renderBigPicture} from './render-big-picture.js';
+import { renderBigPicture } from './render-big-picture.js';
 
 const thumbnailsList = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -28,4 +28,4 @@ const renderPosts = (posts) => {
   });
 };
 
-export {renderPosts};
+export { renderPosts };

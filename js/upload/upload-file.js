@@ -1,4 +1,4 @@
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const FILE_TYPES = ['.gif', '.jpg', '.jpeg', '.png'];
 
 const fileChooser = document.querySelector('.img-upload__input');
 const imagePreview = document.querySelector('.img-upload__preview img');
@@ -18,5 +18,4 @@ const initFileUpload = () => {
   fileChooser.addEventListener('change', fileChooserChangeHandler);
 };
 
-export {initFileUpload};
-
+export { initFileUpload };
