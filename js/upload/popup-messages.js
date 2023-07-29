@@ -1,5 +1,5 @@
-import {closeForm} from './form.js';
-import {unblockSubmitButton} from '../utils/util.js';
+import { closeForm } from './form.js';
+import { unblockSubmitButton } from '../utils/util.js';
 
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
@@ -20,7 +20,7 @@ const messageClickOutsideHandler = (evt) => {
   }
 };
 
-function closeMessage () {
+function closeMessage() {
   if (document.querySelector('.success')) {
     closeForm();
   }
@@ -47,4 +47,4 @@ const createErrorMessage = () => {
   createMessage(errorMessage, '.error__button');
 };
 
-export {createSuccessMessage, createErrorMessage};
+export { createSuccessMessage, createErrorMessage };

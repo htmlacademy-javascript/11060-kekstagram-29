@@ -1,15 +1,16 @@
-import {shuffleArray, debounce} from '../utils/util.js';
+import { shuffleArray } from '../utils/util.js';
 import { renderPosts } from './render-posts.js';
 
 const SHUFFLED_DATA_LENGTH = 10;
 const RERENDER_DELAY = 500;
-const FILTER_DEFAULT = 'filter-default';
 const FILTER_RANDOM = 'filter-random';
 const FILTER_DISCUSSED = 'filter-discussed';
 
 const imgFilters = document.querySelector('.img-filters');
 const imgFiltersForm = document.querySelector('.img-filters__form');
 const imgFiltersButtons = document.querySelectorAll('.img-filters__button');
+
+let timeOut;
 
 const activeButtonToggle = (target) => {
   imgFiltersButtons.forEach((btn) => btn.classList.remove('img-filters__button--active'));
@@ -22,11 +23,7 @@ const removePictures = () => {
 
 const showFilterButtons = () => imgFilters.classList.remove('img-filters--inactive');
 
-const getFilteringData = (data, evt) => {
-  if (!evt || evt.target.id === FILTER_DEFAULT) {
-    return data;
-  }
-
+const getFilteredData = (data, evt) => {
   if (evt.target.id === FILTER_RANDOM) {
     return shuffleArray(data.slice()).slice(0, SHUFFLED_DATA_LENGTH);
   }
@@ -34,24 +31,28 @@ const getFilteringData = (data, evt) => {
   if (evt.target.id === FILTER_DISCUSSED) {
     return data.slice().sort((a, b) => b.comments.length - a.comments.length);
   }
+
+  return data;
 };
 
-const setDelayRender = debounce((data, evt) => {
-  removePictures();
-  renderPosts(getFilteringData(data, evt));
-}, RERENDER_DELAY);
-
 const initFilter = (data) => {
-  showFilterButtons();
+  if (data) {
+    showFilterButtons();
+  }
 
   imgFiltersForm.addEventListener('click', (evt) => {
     evt.preventDefault();
 
     if (evt.target.closest('.img-filters__button')) {
       activeButtonToggle(evt.target);
-      setDelayRender(data, evt);
+      clearTimeout(timeOut);
+
+      timeOut = setTimeout(() => {
+        removePictures();
+        renderPosts(getFilteredData(data, evt));
+      }, RERENDER_DELAY);
     }
   });
 };
 
-export {initFilter, getFilteringData};
+export { initFilter };
