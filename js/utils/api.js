@@ -1,3 +1,5 @@
+const DEFAULT_METHOD = 'POST';
+
 const getData = (url, onSuccess, onError) => {
   fetch(url)
     .then((response) => {
@@ -5,7 +7,7 @@ const getData = (url, onSuccess, onError) => {
         return response.json();
       }
 
-      onError();
+      throw new Error(`${response.status} ${response.statusText}`);
     })
     .then((data) => {
       onSuccess(data);
@@ -15,11 +17,11 @@ const getData = (url, onSuccess, onError) => {
     });
 };
 
-const sendData = (url, data, onSuccess, onError) => {
+const sendData = (url, body, onSuccess, onError, method = DEFAULT_METHOD) => {
   fetch(url,
     {
-      method: 'POST',
-      body: data,
+      method,
+      body,
     },
   )
     .then((response) => {

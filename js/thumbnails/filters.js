@@ -21,8 +21,6 @@ const removePictures = () => {
   document.querySelectorAll('.picture').forEach((picture) => picture.remove());
 };
 
-const showFilterButtons = () => imgFilters.classList.remove('img-filters--inactive');
-
 const getFilteredData = (data, evt) => {
   if (evt.target.id === FILTER_RANDOM) {
     return shuffleArray(data.slice()).slice(0, SHUFFLED_DATA_LENGTH);
@@ -36,9 +34,7 @@ const getFilteredData = (data, evt) => {
 };
 
 const initFilter = (data) => {
-  if (data) {
-    showFilterButtons();
-  }
+  imgFilters.classList.remove('img-filters--inactive');
 
   imgFiltersForm.addEventListener('click', (evt) => {
     evt.preventDefault();
