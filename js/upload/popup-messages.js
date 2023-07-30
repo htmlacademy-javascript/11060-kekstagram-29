@@ -1,5 +1,5 @@
 import { closeForm } from './form.js';
-import { unblockSubmitButton } from '../utils/util.js';
+import { unblockSubmitButton, isEscapeKey } from '../utils/util.js';
 
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
@@ -7,7 +7,7 @@ const errorMessage = document.querySelector('#error').content.querySelector('.er
 const closeButtonClickHandler = () => closeMessage();
 
 const messageEscKeydownHandler = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey) {
     evt.preventDefault();
     closeMessage();
   }

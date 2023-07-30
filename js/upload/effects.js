@@ -1,8 +1,3 @@
-const image = document.querySelector('.img-upload__preview img');
-const effectValue = document.querySelector('.effect-level__value');
-const sliderElement = document.querySelector('.effect-level__slider');
-const effectLevel = document.querySelector('.effect-level');
-
 const EFFECTS = {
   none: {
     name: '',
@@ -49,6 +44,11 @@ const EFFECTS = {
   },
 };
 
+const image = document.querySelector('.img-upload__preview img');
+const effectValue = document.querySelector('.effect-level__value');
+const sliderElement = document.querySelector('.effect-level__slider');
+const effectLevel = document.querySelector('.effect-level');
+
 const setSliderState = (target) => {
   if (target.matches('#effect-none')) {
     effectLevel.classList.add('hidden');
@@ -90,8 +90,11 @@ const updateEffect = (target) => {
 };
 
 const initSlider = (target) => {
+  if (!sliderElement.noUiSlider) {
+    createSlider(target);
+  }
+
   setSliderState(target);
-  createSlider(target);
   updateEffect(target);
 };
 

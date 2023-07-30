@@ -1,4 +1,7 @@
+import { isEscapeKey } from '../utils/util.js';
+
 const COMMENTS_COUNTER = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
@@ -11,6 +14,8 @@ const commentTemplate = document.querySelector('.social__comment');
 
 let visibleComments = 5;
 let commentsFromData = [];
+
+const closeBigPicture = () => closeModal();
 
 const createComment = (thumbnail) => {
   const commentElement = commentTemplate.cloneNode(true);
@@ -49,8 +54,6 @@ const commentsLoaderButtonClickHandler = () => {
   commentsFromData.slice(0, visibleComments).forEach((element) => commentsList.append(createComment(element)));
 };
 
-commentsLoaderButton.addEventListener('click', commentsLoaderButtonClickHandler);
-
 const fillBigPicture = (thumbnail) => {
   commentsList.innerHTML = '';
   bigPictureImg.src = thumbnail.url;
@@ -62,37 +65,34 @@ const fillBigPicture = (thumbnail) => {
 };
 
 const popupEscKeydownHandler = (evt) => {
-  if (evt.key === 'Escape' && !evt.target.closest('.social__footer-text')) {
+  if (isEscapeKey && !evt.target.closest('.social__footer-text')) {
     evt.preventDefault();
     closeModal();
   }
 };
 
-const сloseButtonClickHandler = () => closeBigPicture();
+const closeButtonClickHandler = () => closeBigPicture();
 
 function openModal() {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', popupEscKeydownHandler);
-  closeButton.addEventListener('click', сloseButtonClickHandler);
+  closeButton.addEventListener('click', closeButtonClickHandler);
 }
 
 function closeModal() {
   document.body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', popupEscKeydownHandler);
-  closeButton.removeEventListener('click', сloseButtonClickHandler);
+  closeButton.removeEventListener('click', closeButtonClickHandler);
   visibleComments = COMMENTS_COUNTER;
 }
 
-function closeBigPicture() {
-  closeModal();
-}
-
-function renderBigPicture(thumb) {
+const renderBigPicture = (thumb) => {
   commentsFromData = thumb.comments;
   fillBigPicture(thumb);
   openModal();
-}
+  commentsLoaderButton.addEventListener('click', commentsLoaderButtonClickHandler);
+};
 
 export { renderBigPicture };

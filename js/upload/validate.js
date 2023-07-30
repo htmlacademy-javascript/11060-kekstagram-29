@@ -15,18 +15,22 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper-error',
 });
 
+const createHashtags = (value) => value.toLowerCase().trim().split(' ').filter((it) => it);
+const checkHashtagBoolean = (hashtags) => hashtags.every((element) => REGEXP.test(element));
+const checkHashtagUnique = (hashtags) => new Set(hashtags);
+
 const validateHashtags = (value) => {
-  const hashtags = value.toLowerCase().trim().split(' ');
-  const hashtagBoolean = hashtags.every((element) => REGEXP.test(element));
-  const uniqueHashtags = new Set(hashtags);
+  const hashtags = createHashtags(value);
+  const hashtagBoolean = checkHashtagBoolean(hashtags);
+  const uniqueHashtags = checkHashtagUnique(hashtags);
 
   return (hashtagBoolean && hashtags.length <= 5 && hashtags.length === uniqueHashtags.size || value === '');
 };
 
 const getHashtagErrorMessage = (value) => {
-  const hashtags = value.toLowerCase().trim().split(' ');
-  const hashtagBoolean = hashtags.every((element) => REGEXP.test(element));
-  const uniqueHashtags = new Set(hashtags);
+  const hashtags = createHashtags(value);
+  const hashtagBoolean = checkHashtagBoolean(hashtags);
+  const uniqueHashtags = checkHashtagUnique(hashtags);
 
   if (!value) {
     return '';
@@ -47,11 +51,9 @@ const getHashtagErrorMessage = (value) => {
 
 const validateDescription = (value) => value.length <= MAX_LENGTH;
 
-const getDescriptionErrorMessage = () => DESCRIPTION_LENGTH_MESSAGE;
-
 const addValidator = () => {
   pristine.addValidator(formHashtagField, validateHashtags, getHashtagErrorMessage, 1, true);
-  pristine.addValidator(formDescriptionField, validateDescription, getDescriptionErrorMessage);
+  pristine.addValidator(formDescriptionField, validateDescription, DESCRIPTION_LENGTH_MESSAGE);
 };
 
 const validateByPristine = () => pristine.validate();
